@@ -1,0 +1,18 @@
+services:
+  suricata-replay:
+    build: ./testenv
+    volumes:
+      - ./logs:/var/log/suricata
+      - ./pcaps:/pcaps:ro
+      - ./testenv/rules:/rules:ro
+    command: ["suricata", "-S", "/rules/test.rules", "-r", "/pcaps/test.pcap", "-l", "/var/log/suricata"]
+
+  agent:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/var/log/suricata:ro
+    depends_on:
+      suricata-replay:
+        condition: service_completed_successfully
