@@ -70,18 +70,3 @@ docker compose up --build
 
 Compose поднимает `suricata-replay` (одноразовый прогон pcap, пишет `logs/eve.json`)
 и `agent` (ждёт файл, читает и стримит наружу).
-
-## Структура репозитория
-
-├ main.go               # весь агент: Tailer, Hub, SSE-обработчик
-├ go.mod
-├ Dockerfile            # multi-stage сборка агента
-├ docker-compose.yml    # suricata-replay + agent
-├ .gitignore
-├ README.md
-└ testenv/
-├ Dockerfile        # Ubuntu 24.04 + Suricata (для replay)
-├ rules/test.rules  # 3 правила для тестового трафика
-├ gen-pcap.sh       # запись тестового трафика в pcap
-├ replay.sh         # pcap -> Suricata -> logs/eve.json
-└ sse-test.html     # наглядная страница с EventSource
