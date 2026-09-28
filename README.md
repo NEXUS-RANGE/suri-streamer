@@ -32,6 +32,7 @@ eve.json -> Tailer (единственный читатель) -> parseLine (ф�
 go build -o agent .
 ./agent -file /var/log/suricata/eve.json -addr :8080
 
+
 | Флаг | По умолчанию      | Назначение           |
 | -------- | ---------------------------- | ------------------------------ |
 | `-file`  | `/var/log/suricata/eve.json` | путь к eve.json           |
@@ -64,22 +65,23 @@ WantedBy=multi-user.target
 ### Docker
 
 docker compose up --build
+
 # SSE: http://localhost:8080/events
+
 Compose поднимает `suricata-replay` (одноразовый прогон pcap, пишет `logs/eve.json`)
 и `agent` (ждёт файл, читает и стримит наружу).
 
 ## Структура репозитория
 
-.
-├── main.go               # весь агент: Tailer, Hub, SSE-обработчик
-├── go.mod
-├── Dockerfile            # multi-stage сборка агента
-├── docker-compose.yml    # suricata-replay + agent
-├── .gitignore
-├── README.md
-└── testenv/
-    ├── Dockerfile        # Ubuntu 24.04 + Suricata (для replay)
-    ├── rules/test.rules  # 3 правила для тестового трафика
-    ├── gen-pcap.sh       # запись тестового трафика в pcap
-    ├── replay.sh         # pcap -> Suricata -> logs/eve.json
-    └── sse-test.html     # наглядная страница с EventSource
+├ main.go               # весь агент: Tailer, Hub, SSE-обработчик
+├ go.mod
+├ Dockerfile            # multi-stage сборка агента
+├ docker-compose.yml    # suricata-replay + agent
+├ .gitignore
+├ README.md
+└ testenv/
+├ Dockerfile        # Ubuntu 24.04 + Suricata (для replay)
+├ rules/test.rules  # 3 правила для тестового трафика
+├ gen-pcap.sh       # запись тестового трафика в pcap
+├ replay.sh         # pcap -> Suricata -> logs/eve.json
+└ sse-test.html     # наглядная страница с EventSource
