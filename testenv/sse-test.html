@@ -21,8 +21,9 @@
  <tbody id="rows"></tbody>
 </table>
 <script>
+const host = new URLSearchParams(location.search).get("host") || "localhost";
 const port = new URLSearchParams(location.search).get("port") || "8080";
-const es = new EventSource(`http://localhost:${port}/events`);
+const es = new EventSource(`http://${host}:${port}/events`);
 const st = document.getElementById("status");
 es.onopen  = () => { st.textContent = "подключено"; st.className = "ok"; };
 es.onerror = () => { st.textContent = "обрыв (переподключаюсь...)"; st.className = "bad"; };

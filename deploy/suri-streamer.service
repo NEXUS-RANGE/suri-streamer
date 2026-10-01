@@ -1,0 +1,11 @@
+[Unit]
+Description=Suricata alerts SSE agent (suri-streamer)
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/suri-streamer -file /var/log/suricata/eve.json -addr :8080
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
